@@ -1,0 +1,53 @@
+class Aventurero:
+    def __init__(self, nombre, fuerza, destreza, defensa, vida):
+        self.nombre = nombre
+        self.fuerza = fuerza
+        self.destreza = destreza
+        self.defensa = defensa
+        self.vida = vida
+
+    def atributos(self):
+        print(f"{self.nombre}:")
+        print(f"· Fuerza: {self.fuerza}")
+        print(f"· Destreza: {self.destreza}")
+        print(f"· Defensa: {self.defensa}")
+        print(f"· Vida: {self.vida}")
+
+    def esta_vivo(self):
+        return self.vida > 0
+
+    def morir(self):
+        self.vida = 0
+        print(f"{self.nombre} ha muerto.")
+
+    def recibir_daño(self, daño):
+        daño_real = max(daño - self.defensa, 0)
+        self.vida -= daño_real
+        print(f"{self.nombre} ha recibido {daño_real} puntos de daño.")
+        if not self.esta_vivo():
+            self.morir()
+
+    def atacar(self, enemigo):
+        print(f"{self.nombre} ataca a {enemigo.nombre}!")
+        daño = self.calcular_daño()
+        enemigo.recibir_daño(daño)
+
+    def calcular_daño(self):
+        return self.fuerza
+
+
+class Guerrero(Aventurero):
+    def __init__(self, nombre, fuerza, destreza, defensa, vida, arma):
+        super().__init__(nombre, fuerza, destreza, defensa, vida)
+        self.arma = arma
+
+    def atributos(self):
+        super().atributos()
+        print(f"· Arma: {self.arma}")
+
+    def calcular_daño(self):
+        return self.fuerza + 5  # El guerrero tiene más daño base
+
+
+class Arquero(Aventurero):
+    def __init__(self, nombre, fuerza, 
